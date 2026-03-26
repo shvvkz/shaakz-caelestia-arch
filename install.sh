@@ -20,7 +20,7 @@ cd /tmp
 rm -rf yay
 
 echo "==> Cloning Caelestia core repo"
-git clone https://github.com/caelestia-dots/calestia.git ~/.local/share/caelestia
+git clone https://github.com/caelestia-dots/caelestia.git ~/.local/share/caelestia
 
 echo "==> Running Caelestia installer"
 ~/.local/share/caelestia/install.fish --vscode=code --discord
@@ -42,7 +42,6 @@ EOF'
 
 echo "==> Setting executable scripts (from your repo)"
 chmod +x ./caelestia/.config/caelestia/scripts/update.sh || true
-chmod +x ./caelestia/.config/caelestia/scripts/code-extension.sh || true
 
 echo "==> Applying dotfiles with stow (from your repo)"
 rm -rf ~/.config/caelestia
@@ -51,5 +50,9 @@ stow caelestia
 echo "==> Creating wallpapers symlink"
 mkdir -p ~/Pictures
 ln -sf ~/.config/caelestia/Wallpapers ~/Pictures/Wallpapers
+
+echo "==> Setting code extension"
+chmod +x ./code-extension.sh || true
+./code-extension.sh
 
 echo "==> Installation complete!"
