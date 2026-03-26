@@ -8,7 +8,8 @@ echo "==> Updating system"
 sudo pacman -Syu --noconfirm
 
 echo "==> Installing base packages"
-sudo pacman -S --noconfirm wget curl gcc make cmake neovim fish kate thunar keepassxc pacman-contrib stow base-devel pybind11 git
+sudo pacman -S --noconfirm wget curl gcc make cmake neovim fish kate thunar keepassxc pacman-contrib stow base-devel pybind11 firefox ttf-fira-code 
+yay -S code-marketplace
 
 if ! command -v yay &> /dev/null; then
     cd /tmp
@@ -16,7 +17,7 @@ if ! command -v yay &> /dev/null; then
     git clone https://aur.archlinux.org/yay.git
     cd yay
     makepkg -si --noconfirm
-    rm -rf /tmp/yay
+    rm -rf /tmp/yay 
 else
     echo "==> yay already installed, skipping"
 fi
@@ -61,5 +62,13 @@ fi
 
 mkdir -p ~/Pictures
 ln -sf ~/.config/caelestia/Wallpapers ~/Pictures/Wallpapers
+
+rm ~/.config/Code\ -\ OSS/User/settings.json
+ln -sf ~/.config/caelestia/vscode_user_settings.json ~/.config/Code\ -\ OSS/User/settings.json
+
+echo "" >> ~/.bash_profile
+echo 'if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then' >> ~/.bash_profile
+echo '    exec start-hyprland' >> ~/.bash_profile
+echo 'fi' >> ~/.bash_profile
 
 echo "==> Installation complete!"

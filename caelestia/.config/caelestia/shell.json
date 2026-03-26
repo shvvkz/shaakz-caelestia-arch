@@ -563,7 +563,7 @@
         "to": "YT Music"
       }
     ],
-    "showLyrics": true
+    "showLyrics": false
   },
   "paths": {
     "wallpaperDir": "~/Pictures/Wallpapers",

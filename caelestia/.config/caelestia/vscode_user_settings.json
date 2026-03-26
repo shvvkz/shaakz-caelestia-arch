@@ -1,0 +1,13 @@
+{
+    "workbench.colorTheme": "GitHub Dark",
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.sideBar.location": "right",
+    "editor.fontFamily": "'Fira Code', monospace",
+    "editor.fontLigatures": true,
+    "terminal.integrated.profiles.linux": {
+        "fish": {
+            "path": "fish"
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "fish"
+}
