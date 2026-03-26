@@ -2,59 +2,64 @@
 
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 echo "==> Updating system"
 sudo pacman -Syu --noconfirm
 
 echo "==> Installing base packages"
-sudo pacman -S --noconfirm wget curl gcc make cmake neovim fish kate thunar keepassxc pacman-contrib stow base-devel pybind11
+sudo pacman -S --noconfirm wget curl gcc make cmake neovim fish kate thunar keepassxc pacman-contrib stow base-devel pybind11 git
 
-echo "==> Installing yay (AUR helper)"
-cd /tmp
-rm -rf yay
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si --noconfirm
+if ! command -v yay &> /dev/null; then
+    cd /tmp
+    rm -rf yay
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si --noconfirm
+    rm -rf /tmp/yay
+else
+    echo "==> yay already installed, skipping"
+fi
 
-echo "==> Cleaning yay build files"
-cd /tmp
-rm -rf yay
+CAELESTIA_DIR="$HOME/.local/share/caelestia"
 
-echo "==> Cloning Caelestia core repo"
-git clone https://github.com/caelestia-dots/caelestia.git ~/.local/share/caelestia
+if [ ! -d "$CAELESTIA_DIR" ]; then
+    git clone https://github.com/caelestia-dots/caelestia.git "$CAELESTIA_DIR"
+    fish "$CAELESTIA_DIR/install.fish" --vscode=code --discord
+    # echo "==> Installing caelestia-shell"
+    # yay -S --noconfirm caelestia-shell-git
+else
+    echo "==> Caelestia already installed, skipping"
+fi
 
-echo "==> Running Caelestia installer"
-~/.local/share/caelestia/install.fish --vscode=code --discord
-
-# echo "==> Installing caelestia-shell"
-# yay -S --noconfirm caelestia-shell-git
-
-echo "==> Configuring Hyprland exec"
 mkdir -p ~/.config/hypr/hyprland
+grep -qxF "exec-once = awww-daemon" ~/.config/hypr/hyprland/execs.conf 2>/dev/null || \
 echo "exec-once = awww-daemon" >> ~/.config/hypr/hyprland/execs.conf
 
 sudo systemctl enable NetworkManager
 
-echo "==> Switching WiFi backend to iwd"
 sudo systemctl disable --now wpa_supplicant || true
 
-sudo bash -c 'cat <<EOF >> /etc/NetworkManager/NetworkManager.conf
+if ! grep -q "wifi.backend=iwd" /etc/NetworkManager/NetworkManager.conf 2>/dev/null; then
+    sudo bash -c 'cat <<EOF >> /etc/NetworkManager/NetworkManager.conf
 [device]
 wifi.backend=iwd
 EOF'
+fi
 
-echo "==> Setting executable scripts (from your repo)"
+cd "$SCRIPT_DIR"
+
 chmod +x ./caelestia/.config/caelestia/scripts/update.sh || true
 
-echo "==> Applying dotfiles with stow (from your repo)"
 rm -rf ~/.config/caelestia
 stow caelestia
 
-echo "==> Creating wallpapers symlink"
+if [ -f "./code-extension.sh" ]; then
+    chmod +x ./code-extension.sh
+    ./code-extension.sh
+fi
+
 mkdir -p ~/Pictures
 ln -sf ~/.config/caelestia/Wallpapers ~/Pictures/Wallpapers
-
-echo "==> Setting code extension"
-chmod +x ./code-extension.sh || true
-./code-extension.sh
 
 echo "==> Installation complete!"
