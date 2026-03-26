@@ -6,7 +6,7 @@ echo "==> Updating system"
 sudo pacman -Syu --noconfirm
 
 echo "==> Installing base packages"
-sudo pacman -S --noconfirm wget curl gcc make cmake neovim fish kate thunar keepassxc pacman-contrib stow base-devel
+sudo pacman -S --noconfirm wget curl gcc make cmake neovim fish kate thunar keepassxc pacman-contrib stow base-devel pybind11
 
 echo "==> Installing yay (AUR helper)"
 cd /tmp
@@ -25,12 +25,14 @@ git clone https://github.com/caelestia-dots/caelestia.git ~/.local/share/caelest
 echo "==> Running Caelestia installer"
 ~/.local/share/caelestia/install.fish --vscode=code --discord
 
-echo "==> Installing caelestia-shell"
-yay -S --noconfirm caelestia-shell-git
+# echo "==> Installing caelestia-shell"
+# yay -S --noconfirm caelestia-shell-git
 
 echo "==> Configuring Hyprland exec"
 mkdir -p ~/.config/hypr/hyprland
 echo "exec-once = awww-daemon" >> ~/.config/hypr/hyprland/execs.conf
+
+sudo systemctl enable NetworkManager
 
 echo "==> Switching WiFi backend to iwd"
 sudo systemctl disable --now wpa_supplicant || true
