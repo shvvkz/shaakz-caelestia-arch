@@ -8,8 +8,7 @@ echo "==> Updating system"
 sudo pacman -Syu --noconfirm
 
 echo "==> Installing base packages"
-sudo pacman -S --noconfirm wget curl gcc make cmake neovim fish kate thunar keepassxc pacman-contrib stow base-devel pybind11 firefox ttf-fira-code 
-yay -S code-marketplace
+sudo pacman -S --noconfirm wget curl gcc make cmake neovim fish kate thunar keepassxc pacman-contrib stow base-devel pybind11 firefox ttf-fira-code bluez bluez-utils
 
 if ! command -v yay &> /dev/null; then
     cd /tmp
@@ -22,13 +21,13 @@ else
     echo "==> yay already installed, skipping"
 fi
 
+yay -S code-marketplace
+
 CAELESTIA_DIR="$HOME/.local/share/caelestia"
 
 if [ ! -d "$CAELESTIA_DIR" ]; then
     git clone https://github.com/caelestia-dots/caelestia.git "$CAELESTIA_DIR"
     fish "$CAELESTIA_DIR/install.fish" --vscode=code --discord
-    # echo "==> Installing caelestia-shell"
-    # yay -S --noconfirm caelestia-shell-git
 else
     echo "==> Caelestia already installed, skipping"
 fi
