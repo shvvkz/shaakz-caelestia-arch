@@ -1,16 +1,17 @@
 #!/bin/bash
 
-UPDATES=$(checkupdates 2>/dev/null)
-AUR_UPDATES=$(yay -Qua 2>/dev/null)
+AUR_UPDATES=$(yay -Qu 2>/dev/null)
 
-if [[ -n "$UPDATES" || -n "$AUR_UPDATES" ]]; then
-    notify-send "System" "Starting system update..."
-else
+if [[ -z "$AUR_UPDATES" ]]; then
     notify-send "System" "System is up to date."
     exit 0
 fi
 
-sudo pacman -Syu --noconfirm
-yay -Syu --noconfirm
+notify-send "System" "Starting system update..."
 
-notify-send "System" "System updated."
+if yay -Syu --noconfirm; then
+    notify-send "System" "System updated successfully."
+else
+    notify-send "System" "Update failed!"
+    exit 1
+fi
