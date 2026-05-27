@@ -65,6 +65,9 @@ ln -sf ~/.config/caelestia/Wallpapers ~/Pictures/Wallpapers
 rm ~/.config/Code\ -\ OSS/User/settings.json
 ln -sf ~/.config/caelestia/vscode_user_settings.json ~/.config/Code\ -\ OSS/User/settings.json
 
+rm ~/.config/starship.toml
+ln -sf ~/.config/caelestia/starship.toml ~/.config/starship.toml
+
 echo "" >> ~/.bash_profile
 echo 'if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then' >> ~/.bash_profile
 echo '    exec start-hyprland' >> ~/.bash_profile
