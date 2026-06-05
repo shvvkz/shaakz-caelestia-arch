@@ -13,6 +13,8 @@ return {
 
       treesitter.setup({
         ensure_installed = {
+          "c",
+          "cpp",
           "rust",
           "lua",
           "toml",
@@ -21,11 +23,17 @@ return {
           "markdown",
           "markdown_inline",
         },
+
         highlight = {
           enable = true,
         },
+
         indent = {
           enable = true,
+          disable = {
+            "c",
+            "cpp",
+          },
         },
       })
     end,

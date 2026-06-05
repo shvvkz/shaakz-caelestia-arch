@@ -8,7 +8,7 @@ echo "==> Updating system"
 sudo pacman -Syu --noconfirm
 
 echo "==> Installing base packages"
-sudo pacman -S --noconfirm wget curl gcc make cmake neovim fish kate thunar keepassxc pacman-contrib stow base-devel pybind11 firefox ttf-fira-code bluez bluez-utils
+sudo pacman -S --noconfirm wget curl gcc make cmake neovim fish kate thunar keepassxc pacman-contrib stow base-devel pybind11 firefox ttf-fira-code bluez bluez-utils clang bear
 
 if ! command -v yay &> /dev/null; then
     cd /tmp
