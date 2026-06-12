@@ -5,17 +5,6 @@
                 "scale": 1
             }
         },
-        "font": {
-            "family": {
-                "clock": "Rubik",
-                "material": "Material Symbols Rounded",
-                "mono": "CaskaydiaCove NF",
-                "sans": "Rubik"
-            },
-            "size": {
-                "scale": 1
-            }
-        },
         "padding": {
             "scale": 1
         },
@@ -471,7 +460,6 @@
                 "to": "YT Music"
             }
         ],
-        "showLyrics": false,
         "smartScheme": true,
         "useFahrenheit": false,
         "useFahrenheitPerformance": false,
