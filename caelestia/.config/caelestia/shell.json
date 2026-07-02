@@ -16,7 +16,7 @@
         },
         "transparency": {
             "base": 0.85,
-            "enabled": false,
+            "enabled": true,
             "layers": 0.4
         }
     },
@@ -411,7 +411,7 @@
         ],
         "maxShown": 7,
         "maxWallpapers": 9,
-        "showOnHover": false,
+        "showOnHover": true,
         "specialPrefix": "@",
         "useFuzzy": {
             "actions": false,
